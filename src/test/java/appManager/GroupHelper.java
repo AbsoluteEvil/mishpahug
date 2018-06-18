@@ -14,13 +14,6 @@ public class GroupHelper extends HelperBase {
         super(driver);
     }
 
-    public void createGroupWithThisName(String groupName) {
-        TestBase.app.getNavigationHelper().goToGroupsPage();
-        initGroupCreation();
-        fillGroupForm(new GroupData().withName(groupName));
-        submit();
-        TestBase.app.getNavigationHelper().returnHome();
-    }
 
     public void returnToGroupsPage() {
         click(By.xpath("//a[@href='group.php']"));
@@ -33,7 +26,7 @@ public class GroupHelper extends HelperBase {
     }
 
     public void initGroupCreation() {
-        click(By.name("new"));
+        click(By.xpath("//button[@color='warn']"));
     }
 
     public void selectGroup() {
