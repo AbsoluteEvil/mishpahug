@@ -3,6 +3,7 @@ package ru.stqa.selenium.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 import java.util.concurrent.TimeUnit;
 
@@ -48,6 +49,7 @@ public abstract class PageBase {
     public void loadPage() {
         driver.get(getPageUrl());
     }
+
 
 
 }
