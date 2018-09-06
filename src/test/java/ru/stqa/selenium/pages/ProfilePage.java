@@ -57,7 +57,7 @@ public class ProfilePage extends PageBase {
     @FindBy(xpath = "//mat-select[@placeholder='Marital Status']")
     WebElement maritalStatus;
 
-    @FindBy(xpath = "//span[contains(text(),'Change')]")
+    @FindBy(xpath = "//div[@class='d-flex flex-row justify-content-center']//button[2]")
     WebElement editProfileButton;
 
     @FindBy(xpath = "//button[@type='submit']")

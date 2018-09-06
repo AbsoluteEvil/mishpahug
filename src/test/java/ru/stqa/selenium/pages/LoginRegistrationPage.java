@@ -75,4 +75,9 @@ public class LoginRegistrationPage extends PageBase {
         return this;
     }
 
+    public LoginRegistrationPage waitUntilPageLoaded() {
+        this.waitUntilIsLoadedCustomTime(buttonSubmit,40);
+        return this;
+    }
+
 }

@@ -30,6 +30,7 @@ public class TestBase {
     if (config.hasProperty("grid.url") && !"".equals(config.getProperty("grid.url"))) {
       gridHubUrl = new URL(config.getProperty("grid.url"));
     }
+
     capabilities = config.getCapabilities();
   }
 

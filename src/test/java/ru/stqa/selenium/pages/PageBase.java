@@ -3,6 +3,8 @@ package ru.stqa.selenium.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.util.concurrent.TimeUnit;
@@ -50,6 +52,12 @@ public abstract class PageBase {
         driver.get(getPageUrl());
     }
 
-
+    public void waitUntilIsLoadedCustomTime(WebElement element, int time) {
+        try {
+            new WebDriverWait(driver, time).until(ExpectedConditions.visibilityOf(element));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

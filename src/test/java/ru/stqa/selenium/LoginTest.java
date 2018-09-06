@@ -5,18 +5,18 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import ru.stqa.selenium.pages.HomePageHelper;
+import ru.stqa.selenium.pages.HomePage;
 import ru.stqa.selenium.pages.LoginRegistrationPage;
 
 import java.util.concurrent.TimeUnit;
 
 public class LoginTest extends TestBase {
-    private HomePageHelper homepage;
+    private HomePage homepage;
     private LoginRegistrationPage loginRegistrationPage;
 
     @BeforeMethod
     public void initPageObjects() {
-        homepage = PageFactory.initElements(driver, HomePageHelper.class);
+        homepage = PageFactory.initElements(driver, HomePage.class);
         loginRegistrationPage=PageFactory.initElements(driver,LoginRegistrationPage.class);
         driver.get(baseUrl);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
