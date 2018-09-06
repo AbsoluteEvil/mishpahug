@@ -35,14 +35,17 @@ public class ProfileTest extends TestBase {
         birthday.setTime(faker.date().birthday());
         String email = "steve.anderson@gmail.com";
         String password = "na5fl1qon";
-        loginRegistrationPage.clickButtonLogin()
+        homepage.clickButtonLogin();
+        loginRegistrationPage
                 .putTextToFieldEmail(email)
                 .putTextToFieldPassword(password)
                 .clickButtonSubmit();
-        homepage.pressMenuButton()
-                .waitUntilMenuLoaded();
+        homepage.pressMenuButton();
+        Thread.sleep(6000);
         homepage.goToProfilePage();
+        Thread.sleep(6000);
         profilePage.clickEditButton();
+        Thread.sleep(6000);
         profilePage.selectBirthdayInCalendar(birthday);
     }
 }

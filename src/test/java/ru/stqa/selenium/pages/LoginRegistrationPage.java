@@ -4,13 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.concurrent.TimeUnit;
+
 public class LoginRegistrationPage extends PageBase {
-
-    @FindBy(xpath = "//span[contains(text(),'Login')]")
-    WebElement loginButton;
-
-    @FindBy(xpath = "//span[contains(text(),'Create Account')]")
-    WebElement registrationButton;
 
     @FindBy(xpath = "//input[@placeholder='Email']")
     WebElement emailField;
@@ -49,15 +45,7 @@ public class LoginRegistrationPage extends PageBase {
         return this;
     }
 
-    public LoginRegistrationPage clickButtonRegistration() {
-        registrationButton.click();
-        return this;
-    }
 
-    public LoginRegistrationPage clickButtonLogin() {
-        loginButton.click();
-        return this;
-    }
 
     public LoginRegistrationPage clickButtonSubmit() {
         buttonSubmit.click();
@@ -75,9 +63,8 @@ public class LoginRegistrationPage extends PageBase {
         return this;
     }
 
-    public LoginRegistrationPage waitUntilPageLoaded() {
-        this.waitUntilIsLoadedCustomTime(buttonSubmit,40);
-        return this;
+    public void waitForIt() {
+        driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
     }
 
 }

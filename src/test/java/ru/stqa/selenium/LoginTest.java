@@ -26,8 +26,8 @@ public class LoginTest extends TestBase {
     public void loginAsRegisteredUser() {
         String email = "steve.anderson@gmail.com";
         String password = "na5fl1qon";
-        loginRegistrationPage.clickButtonLogin()
-                .putTextToFieldEmail(email)
+        homepage.clickButtonLogin();
+        loginRegistrationPage.putTextToFieldEmail(email)
                 .putTextToFieldPassword(password)
                 .clickButtonSubmit();
         Assert.assertEquals(true,driver.findElement(By.xpath("//span[@class='ng-star-inserted']")).isEnabled());
@@ -37,8 +37,8 @@ public class LoginTest extends TestBase {
     public void registeration() {
         String email = "anyNewUser@email.com";
         String password = "anyNewPassword";
-        loginRegistrationPage.clickButtonRegistration()
-                .putTextToFieldEmail(email)
+        homepage.clickButtonRegistration();
+        loginRegistrationPage.putTextToFieldEmail(email)
                 .putTextToFieldPassword(password)
                 .putTextToFieldRepeatPassword(password)
                 .clickButtonSubmit();

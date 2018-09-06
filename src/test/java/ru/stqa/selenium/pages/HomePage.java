@@ -1,16 +1,21 @@
 package ru.stqa.selenium.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Sample page
  */
 public class HomePage extends PageBase {
 
-    @FindBy(xpath = "//span[@class='ng-star-inserted']")
+    @FindBy(xpath = "//span/*[@mattooltip='Menu']")
     WebElement menuButton;
 
     @FindBy(xpath = "//span[contains(text(),'Profile')]")
@@ -18,6 +23,16 @@ public class HomePage extends PageBase {
 
     @FindBy(xpath = "//div[@class='mainContainer']")
     WebElement menu;
+
+    @FindBy(xpath = "//span[contains(text(),'Login')]")
+    WebElement loginButton;
+
+    @FindBy(xpath = "//span[contains(text(),'Create Account')]")
+    WebElement registrationButton;
+
+    @FindAll( {
+            @FindBy(xpath = "//div[@class='insideDiv']//button/span")})
+    private List<WebElement> elementsOfMainMenu;
 
 
     public HomePage(WebDriver webDriver) {
@@ -29,20 +44,54 @@ public class HomePage extends PageBase {
         menuButton.click();
         return this;
     }
+    public HomePage goToEventsPage() {
+        elementsOfMainMenu.get(0).click();
+        return this;
+    }
+
+    public HomePage goToNoticePage() {
+        elementsOfMainMenu.get(1).click();
+        return this;
+    }
+
+    public HomePage goToCalendarPage() {
+        elementsOfMainMenu.get(2).click();
+        return this;
+    }
+
+    public HomePage goToParticipationPage() {
+        elementsOfMainMenu.get(3).click();
+        return this;
+    }
+
+    public HomePage goToMyeventsPage() {
+        elementsOfMainMenu.get(4).click();
+        return this;
+    }
 
     public HomePage goToProfilePage() {
-        profilePage.click();
-        return this;
-    }
-    public HomePage waitUntilMenuLoaded() {
-        this.waitUntilIsLoadedCustomTime(menu,40);
+        elementsOfMainMenu.get(5).click();
         return this;
     }
 
-    public HomePage waitUntilPageLoad() {
-        this.menu.isDisplayed();
+    public HomePage logOut() {
+        elementsOfMainMenu.get(6).click();
         return this;
     }
 
+
+    public void waitForIt() {
+        driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+    }
+
+    public HomePage clickButtonRegistration() {
+        registrationButton.click();
+        return this;
+    }
+
+    public HomePage clickButtonLogin() {
+        loginButton.click();
+        return this;
+    }
 }
 

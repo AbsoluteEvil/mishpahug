@@ -52,12 +52,5 @@ public abstract class PageBase {
         driver.get(getPageUrl());
     }
 
-    public void waitUntilIsLoadedCustomTime(WebElement element, int time) {
-        try {
-            new WebDriverWait(driver, time).until(ExpectedConditions.visibilityOf(element));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 }

@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class ProfilePage extends PageBase {
 
@@ -70,11 +71,11 @@ public class ProfilePage extends PageBase {
     }
 
     public WebElement selectNumber(int text) {
-        return driver.findElement(By.xpath((calendarTable.toString()) + "//div[contains(text()," + text + "')]"));
+         return driver.findElement(By.xpath("//tbody[@class='mat-calendar-body']//div[contains(text(),'" + text + "')]"));
     }
 
     public WebElement selectMonth(String text) {
-        return driver.findElement(By.xpath((calendarTable.toString()) + "//div[contains(text()," + text + "')]"));
+        return driver.findElement(By.xpath("//tbody[@class='mat-calendar-body']//div[contains(text(),'" + text + "')]"));
     }
 
     public ProfilePage clickEditButton(){
@@ -84,14 +85,21 @@ public class ProfilePage extends PageBase {
 
     public ProfilePage selectBirthdayInCalendar(Calendar date) throws InterruptedException {
         openCalendarButton.click();
+        Thread.sleep(6000);
         selectYearButton.click();
+        Thread.sleep(6000);
         while (!selectNumber(date.get(Calendar.YEAR)).isDisplayed()) {
             previous20Years.click();
         }
+        Thread.sleep(6000);
         selectNumber(date.get(Calendar.YEAR)).click();
+        Thread.sleep(6000);
         String month = new SimpleDateFormat("MMM", Locale.ENGLISH).format(date.getTime());
+        Thread.sleep(6000);
         selectMonth(month.toUpperCase());
+        Thread.sleep(6000);
         selectNumber(date.get(Calendar.DATE));
+        Thread.sleep(6000);
         return this;
     }
 
@@ -113,4 +121,9 @@ public class ProfilePage extends PageBase {
         }
         pressEsc();
     }
+
+    public void waitForIt() {
+        driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+    }
+
 }
