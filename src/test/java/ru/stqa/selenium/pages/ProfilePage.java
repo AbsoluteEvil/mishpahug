@@ -5,6 +5,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -35,13 +36,16 @@ public class ProfilePage extends PageBase {
     WebElement openCalendarButton;
 
     @FindBy(xpath = "//div[@class='mat-calendar-arrow']")
-    WebElement selectYearButton;
+    WebElement yearSelectionMenu;
 
     @FindBy(xpath = "//button[@aria-label='Open calendar']")
     WebElement openYearSelectionMenu;
 
     @FindBy(xpath = "//button[@aria-label='Previous 20 years']")
     WebElement previous20Years;
+
+    @FindBy(xpath = "//button[@aria-label='Next 20 years']")
+    WebElement next20Years;
 
     @FindBy(xpath = "//button[@aria-label='Previous month']")
     WebElement previousMonth;
@@ -64,44 +68,60 @@ public class ProfilePage extends PageBase {
     @FindBy(xpath = "//button[@type='submit']")
     WebElement submitButton;
 
+    @FindAll({
+            @FindBy(xpath = "//tbody[@class='mat-calendar-body']/tr/td/div")})
+    private List<WebElement> whatTableContains;
+
 
     public ProfilePage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
 
-    public WebElement selectNumber(int text) {
-         return driver.findElement(By.xpath("//tbody[@class='mat-calendar-body']//div[contains(text(),'" + text + "')]"));
-    }
-
-    public WebElement selectMonth(String text) {
+    public WebElement selectDate(int text) {
         return driver.findElement(By.xpath("//tbody[@class='mat-calendar-body']//div[contains(text(),'" + text + "')]"));
     }
 
-    public ProfilePage clickEditButton(){
+    private List<WebElement> getElements(Calendar date) {
+        return driver.findElements(By.xpath("//tbody[@class='mat-calendar-body']//div[contains(text(),'" + date.get(Calendar.YEAR) + "')]"));
+    }
+
+    public WebElement selectMonth(Calendar date) {
+        String sdf = new SimpleDateFormat("MMM", Locale.ENGLISH).format(date.getTime());
+        WebElement month = driver.findElement(By.xpath("//tbody[@class='mat-calendar-body']//div[contains(text(),'" + sdf.toUpperCase() + "')]"));
+        return month;
+    }
+
+    public ProfilePage clickEditButton() {
         editProfileButton.click();
         return this;
     }
 
-    public ProfilePage selectBirthdayInCalendar(Calendar date) throws InterruptedException {
-        openCalendarButton.click();
-        Thread.sleep(6000);
-        selectYearButton.click();
-        Thread.sleep(6000);
-        while (!selectNumber(date.get(Calendar.YEAR)).isDisplayed()) {
+    public ProfilePage selectYear(int year) {
+        int firstYear = Integer.parseInt(whatTableContains.get(0).getText());
+        int lastYear = Integer.parseInt(whatTableContains.get(whatTableContains.size() - 1).getText());
+        while (year < firstYear) {
             previous20Years.click();
+            firstYear = Integer.parseInt(whatTableContains.get(0).getText());
         }
-        Thread.sleep(6000);
-        selectNumber(date.get(Calendar.YEAR)).click();
-        Thread.sleep(6000);
-        String month = new SimpleDateFormat("MMM", Locale.ENGLISH).format(date.getTime());
-        Thread.sleep(6000);
-        selectMonth(month.toUpperCase());
-        Thread.sleep(6000);
-        selectNumber(date.get(Calendar.DATE));
-        Thread.sleep(6000);
+        while (year > lastYear) {
+            next20Years.click();
+            lastYear = Integer.parseInt(whatTableContains.get(whatTableContains.size() - 1).getText());
+        }
+        selectDate(year).click();
         return this;
     }
+
+    public ProfilePage selectBirthdayInCalendar(Calendar date) throws InterruptedException {
+        System.out.println(date.get(Calendar.DATE)+"."+date.get(Calendar.MONTH)+"."+date.get(Calendar.YEAR));
+        openCalendarButton.click();
+        yearSelectionMenu.click();
+        selectYear(date.get(Calendar.YEAR));
+        selectMonth(date).click();
+        selectDate(date.get(Calendar.DATE)).click();
+        return this;
+    }
+
 
     private void pressEsc() {
         Actions action = new Actions(driver);
@@ -111,10 +131,7 @@ public class ProfilePage extends PageBase {
     private void selectAllCheckboxes() {
         foodPreferencesField.click();
         List<WebElement> els = driver.findElements(By.xpath("//mat-pseudo-checkbox"));
-        for (
-                WebElement el : els)
-
-        {
+        for (WebElement el : els) {
             if (!el.isSelected()) {
                 el.click();
             }
@@ -122,8 +139,7 @@ public class ProfilePage extends PageBase {
         pressEsc();
     }
 
-    public void waitForIt() {
-        driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+    public void waitUntilPageLoaded() {
+        this.waitUntilIsLoadedCustomTime(firstNameField,40);
     }
-
 }

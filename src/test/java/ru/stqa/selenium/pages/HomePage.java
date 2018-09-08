@@ -15,6 +15,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class HomePage extends PageBase {
 
+    @FindBy(xpath = "//h1[@class='gorisontal-center']")
+    WebElement header;
+
     @FindBy(xpath = "//span/*[@mattooltip='Menu']")
     WebElement menuButton;
 
@@ -30,9 +33,11 @@ public class HomePage extends PageBase {
     @FindBy(xpath = "//span[contains(text(),'Create Account')]")
     WebElement registrationButton;
 
-    @FindAll( {
-            @FindBy(xpath = "//div[@class='insideDiv']//button/span")})
+    @FindAll( {@FindBy(xpath = "//div[@class='insideDiv']//button/span")})
     private List<WebElement> elementsOfMainMenu;
+
+    @FindBy(xpath = "//span[contains(text(),'Create Account')]")
+    WebElement eventsPage;
 
 
     public HomePage(WebDriver webDriver) {
@@ -79,11 +84,6 @@ public class HomePage extends PageBase {
         return this;
     }
 
-
-    public void waitForIt() {
-        driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
-    }
-
     public HomePage clickButtonRegistration() {
         registrationButton.click();
         return this;
@@ -92,6 +92,10 @@ public class HomePage extends PageBase {
     public HomePage clickButtonLogin() {
         loginButton.click();
         return this;
+    }
+
+    public void waitUntilMenuLoaded() {
+        this.waitUntilIsLoadedCustomTime(header,40);
     }
 }
 

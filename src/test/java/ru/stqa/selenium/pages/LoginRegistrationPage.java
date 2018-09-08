@@ -26,7 +26,8 @@ public class LoginRegistrationPage extends PageBase {
     @FindBy(xpath = "//span[@class='link']")
     WebElement linkRegistrationOrLogin;
 
-
+    @FindBy(xpath = "//div[@class='containerForm']")
+    WebElement confirmationOfEntry;
 
     public LoginRegistrationPage(WebDriver driver) {
         super(driver);
@@ -63,8 +64,8 @@ public class LoginRegistrationPage extends PageBase {
         return this;
     }
 
-    public void waitForIt() {
-        driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
+    public void waitUntilPageLoaded() {
+        this.waitUntilIsLoadedCustomTime(confirmationOfEntry,40);
     }
 
 }

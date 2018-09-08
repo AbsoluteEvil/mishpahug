@@ -36,16 +36,16 @@ public class ProfileTest extends TestBase {
         String email = "steve.anderson@gmail.com";
         String password = "na5fl1qon";
         homepage.clickButtonLogin();
+        loginRegistrationPage.waitUntilPageLoaded();
         loginRegistrationPage
                 .putTextToFieldEmail(email)
                 .putTextToFieldPassword(password)
                 .clickButtonSubmit();
         homepage.pressMenuButton();
-        Thread.sleep(6000);
+        homepage.waitUntilMenuLoaded();
         homepage.goToProfilePage();
-        Thread.sleep(6000);
+        profilePage.waitUntilPageLoaded();
         profilePage.clickEditButton();
-        Thread.sleep(6000);
         profilePage.selectBirthdayInCalendar(birthday);
     }
 }
