@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -97,6 +98,11 @@ public class ProfilePage extends PageBase {
         return this;
     }
 
+    public ProfilePage clickSubmitButton() {
+        submitButton.click();
+        return this;
+    }
+
     public ProfilePage selectYear(int year) {
         int firstYear = Integer.parseInt(whatTableContains.get(0).getText());
         int lastYear = Integer.parseInt(whatTableContains.get(whatTableContains.size() - 1).getText());
@@ -142,4 +148,6 @@ public class ProfilePage extends PageBase {
     public void waitUntilPageLoaded() {
         this.waitUntilIsLoadedCustomTime(firstNameField,40);
     }
+
+
 }

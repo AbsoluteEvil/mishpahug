@@ -2,12 +2,14 @@ package ru.stqa.selenium;
 
 import com.github.javafaker.Faker;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.selenium.pages.HomePage;
 import ru.stqa.selenium.pages.LoginRegistrationPage;
 import ru.stqa.selenium.pages.ProfilePage;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -29,7 +31,7 @@ public class ProfileTest extends TestBase {
 
 
     @Test
-    public void fillUserInformation() throws InterruptedException {
+    public void fillUserInformation() throws InterruptedException, IOException {
         Faker faker = new Faker(new Locale("en"));
         Calendar birthday = Calendar.getInstance();
         birthday.setTime(faker.date().birthday());
@@ -47,5 +49,6 @@ public class ProfileTest extends TestBase {
         profilePage.waitUntilPageLoaded();
         profilePage.clickEditButton();
         profilePage.selectBirthdayInCalendar(birthday);
+        profilePage.clickSubmitButton();
     }
 }

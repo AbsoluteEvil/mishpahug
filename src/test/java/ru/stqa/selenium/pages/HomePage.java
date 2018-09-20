@@ -6,7 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  * Sample page
  */
 public class HomePage extends PageBase {
+
 
     @FindBy(xpath = "//h1[@class='gorisontal-center']")
     WebElement header;
@@ -39,6 +43,8 @@ public class HomePage extends PageBase {
     @FindBy(xpath = "//span[contains(text(),'Create Account')]")
     WebElement eventsPage;
 
+    @FindBy(xpath = "//div[@class='cdk-overlay-container']")
+    WebElement confirmMassege;
 
     public HomePage(WebDriver webDriver) {
         super(webDriver);
@@ -69,7 +75,7 @@ public class HomePage extends PageBase {
         return this;
     }
 
-    public HomePage goToMyeventsPage() {
+    public HomePage goToMyEventsPage() {
         elementsOfMainMenu.get(4).click();
         return this;
     }
@@ -97,5 +103,7 @@ public class HomePage extends PageBase {
     public void waitUntilMenuLoaded() {
         this.waitUntilIsLoadedCustomTime(header,40);
     }
+
+
 }
 
